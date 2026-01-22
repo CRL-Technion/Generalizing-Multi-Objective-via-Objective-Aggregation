@@ -1,6 +1,6 @@
 # Generalizing Multi-Objective Search via Objective-Aggregation Functions
 
-C++ implementation of the objective-aggregation framework for multi-objective search, as described in "Generalizing Multi-Objective Search via Objective-Aggregation Functions".
+C++ implementation of the objective-aggregation framework for multi-objective search, as described in "Generalizing Multi-Objective Search via Objective-Aggregation Functions". The C++ code was originally forked from [Han Zhang's A*pex](https://github.com/HanZhang39/A-pex) repo. 
 
 ## Overview
 
