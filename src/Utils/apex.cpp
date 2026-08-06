@@ -178,9 +178,9 @@ bool ApexPathPair::update_apex_by_merge_if_bounded(const NodePtr &other_apex, co
       update_flag = true;
     }
 
-    // Length value: take minimum 
+    // Length value: take minimum
     if (other_apex->f[1] < new_apex->f[1]) {
-      new_apex->g[1] = other_apex->g[1];
+      new_apex->g[last_index] = other_apex->g[last_index];
       new_apex->f[1] = other_apex->f[1];
 
 
@@ -198,7 +198,7 @@ bool ApexPathPair::update_apex_by_merge_if_bounded(const NodePtr &other_apex, co
     // ORIGINAL_MO mode: keep original logic
     for (int i = 0; i < other_apex->g.size(); i ++){
       if (other_apex->f[i] < new_apex->f[i]){
-        new_apex->g[i] = other_apex->f[i];
+        new_apex->g[i] = other_apex->g[i];
         new_apex->f[i] = other_apex->f[i];
         if ( path_node->f[i] > (1 + eps[i]) * new_apex->f[i] ){
           return false;

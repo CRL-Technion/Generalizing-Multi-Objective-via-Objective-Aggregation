@@ -25,9 +25,9 @@ void LocalCheck::add_node(ApexPathPairPtr ap){
 }
 
 bool LocalCheckLinear::is_dominated(ApexPathPairPtr node){
-    for (auto ap:min_g2[node->id]){
-        if (is_dominated_dr(node->apex, ap->apex)){
-            assert(node->apex->f[0] >= ap->apex->f[0]);
+    for (auto apex_snapshot: min_g2[node->id]){
+        if (is_dominated_dr(node->apex, apex_snapshot)){
+            assert(node->apex->f[0] >= apex_snapshot->f[0]);
             return true;
         }
     }
@@ -38,22 +38,26 @@ void LocalCheckLinear::add_node(ApexPathPairPtr ap){
     auto id = ap->id;
     for (auto it = min_g2[id].begin(); it != min_g2[id].end(); ){
         // TODO remove it for performance
-        assert(! is_dominated_dr(ap->apex, (*it)->apex  ));
-        if (is_dominated_dr((*it)->apex, ap->apex)){
+        assert(! is_dominated_dr(ap->apex, *it));
+        if (is_dominated_dr(*it, ap->apex)){
             it = min_g2[id].erase(it);
         } else {
             it ++;
         }
     }
 
-    min_g2[ap->id].push_front(ap);
+    // Store a snapshot of the apex Node, not the ApexPathPairPtr itself: the
+    // ApexPathPair's apex field can later be reassigned to a new Node object
+    // by solution-domination bookkeeping (update_apex_by_merge_if_bounded), and
+    // that reassignment must not retroactively change what local-domination
+    // already recorded for this expansion.
+    min_g2[ap->id].push_front(ap->apex);
 }
 
 bool SolutionCheckLinear::is_dominated(ApexPathPairPtr node){
     for (auto ap: solutions){
-        // if (is_bounded(node->apex, ap->path_node, eps)){
-        if (ap->update_apex_by_merge_if_bounded(node->apex, eps)){
-            // assert(ap->update_apex_by_merge_if_bounded(node->apex, eps));
+        if (is_bounded(node->apex, ap->path_node, eps)){
+            ap->update_apex_by_merge_if_bounded(node->apex, eps);
             return true;
         }
     }

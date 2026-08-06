@@ -56,7 +56,7 @@ public:
 class LocalCheckLinear: public DominanceChecker {
 
 protected:
-    std::vector<std::list<ApexPathPairPtr>> min_g2;
+    std::vector<std::list<NodePtr>> min_g2;
 
 public:
 
