@@ -67,7 +67,7 @@ Executables will be in `bin/`:
 ./bin/multiobj -a Apex --apex-mode=original [options...]
 ```
 
-**Aggregation Mode** - Aggregates hidden objectives for dramatic speedups:
+**Aggregation Mode** - Aggregates hidden objectives:
 ```bash
 ./bin/multiobj -a NAMOAdr --namoa-mode=aggregation [options...]
 ./bin/multiobj -a Apex --apex-mode=aggregation [options...]
