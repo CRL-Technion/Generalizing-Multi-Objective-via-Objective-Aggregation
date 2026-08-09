@@ -189,6 +189,7 @@ void single_run_map(size_t graph_size, AdjacencyMatrix& graph, AdjacencyMatrix&i
 
     auto doration_apex = std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - start_a).count();
     std::cout << "Runtime before adding edge detection time: " << doration_apex << " ms" << std::endl;
+    const auto doration_before_edge_detection = doration_apex;
 
     // Add edge detection time for both NAMOAdr and Apex
     if (algorithm == "NAMOAdr") {
@@ -225,7 +226,9 @@ void single_run_map(size_t graph_size, AdjacencyMatrix& graph, AdjacencyMatrix&i
            << num_gen << "\t"
            << num_exp << "\t"
            << solutions.size() << "\t"
-           << (double) runtime / CLOCKS_PER_SEC
+           << doration_apex << "\t"
+           << doration_before_edge_detection << "\t"
+           << (solver->get_time_limit_reached() ? "yes" : "no")
            << std::endl;
 
     std::cout << "----- End of single example -----" << std::endl;

@@ -122,6 +122,7 @@ void ApexSearch::operator()(size_t source, size_t target, Heuristic &heuristic, 
 
     while (open.empty() == false) {
         if ((std::clock() - start_time)/CLOCKS_PER_SEC > time_limit){
+            this->time_limit_reached = true;
             for (auto solution = ap_solutions.begin(); solution != ap_solutions.end(); ++solution) {
                 solutions.push_back((*solution)->path_node);
 

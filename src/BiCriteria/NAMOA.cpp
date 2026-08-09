@@ -128,7 +128,12 @@ void NAMOAdr::operator()(size_t source, size_t target, Heuristic &heuristic, Sol
     open.insert(node);
 
     while (open.empty() == false) {
-        if ((std::clock() - start_time)/CLOCKS_PER_SEC > time_limit){
+        // Compare in milliseconds so total_edge_detection_time (already tracked
+        // in ms) can be folded into the cutoff, matching the runtime reported
+        // in the output file (i.e. the timeout includes edge-detection time).
+        long elapsed_ms = (std::clock() - start_time) * 1000L / CLOCKS_PER_SEC + (long)total_edge_detection_time;
+        if (elapsed_ms > (long)time_limit * 1000L){
+            this->time_limit_reached = true;
             this->end_logging(solutions, false);
             std::cout << "\n----- Time limit reached -----\n" << std::endl;
             return;

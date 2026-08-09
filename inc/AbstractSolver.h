@@ -11,10 +11,12 @@ protected:
 
     size_t num_expansion = 0;
     size_t num_generation= 0;
+    bool time_limit_reached = false;
 
     virtual void init_search(){
         num_expansion = 0;
         num_generation = 0;
+        time_limit_reached = false;
     }
 
     const LoggerPtr         logger;
@@ -26,6 +28,7 @@ public:
 
     size_t get_num_expansion(){return num_expansion;}
     size_t get_num_generation(){return num_generation;}
+    bool get_time_limit_reached(){return time_limit_reached;}
 
     virtual void operator()(size_t source, size_t target, Heuristic &heuristic, SolutionSet &solutions, unsigned int time_limit=UINT_MAX) = 0;
 

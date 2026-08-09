@@ -11,6 +11,7 @@
 #include <memory>
 #include <climits>
 #include <unordered_set>
+#include <cmath>
 #include "boost/heap/pairing_heap.hpp"
 #include "boost/heap/priority_queue.hpp"
 
@@ -131,7 +132,7 @@ struct Node {
                 safety_value = safety_value * (1-g[i]);
             }
             double risk_value = 1-safety_value;
-            f[0] = risk_value;
+            f[0] = std::round(risk_value * 1e5) / 1e5;
             f[1] = g[risk_vector_size] + h[1];
         } else {
             // OriginalMOMode: standard f = g + h
